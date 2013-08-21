@@ -1,6 +1,6 @@
 ## isStyleSupported
 
-Method that provides a reliable means of determining support for CSS styles and values in JavaScript utilizing native implementations (CSS.supports) when available. Please visit the [blog post](ryanmorr.com/detecting-css-style-support) to read more.
+Method that provides a reliable means of determining support for CSS styles and values in JavaScript utilizing native implementations (CSS.supports) when available. Please refer to the [blog post](http://www.ryanmorr.com/detecting-css-style-support) to read more.
 
 ## Example
 
