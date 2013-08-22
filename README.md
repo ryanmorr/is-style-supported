@@ -4,9 +4,9 @@ Method that provides a reliable means of determining support for CSS styles and 
 
 ## Example
 
-To use the method, simply provide a style as the first argument in camel cased format. You can use the optional second argument to determine support for the style's value as well.
+To use the method, simply provide a style as the first argument in typical CSS notation (hyphenated). You will not be required to provide vendor prefixes, that is done internally. You can use the optional second argument to determine support for the style's value as well.
 
-	isStyleSupported('animationName');
+	isStyleSupported('animation-name');
 	
 	isStyleSupported('display', 'flex');
 	
