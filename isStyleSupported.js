@@ -22,7 +22,8 @@
 	support, 
 	camel,
 	key, 
-	capitalized;
+	capitalized,
+	hasValue;
 	
 	//Function to convert css notation (hypenated) to DOM notation (camel cased)
 	function toCamelCase(style){
@@ -46,8 +47,10 @@
 		
 	//Define the function
 	win.isStyleSupported = function(style, value){
+		//Did the user provide the optional second argument of a style value
+		hasValue = arguments.length === 2;
 		//If no value is supplied we use "inherit" as all styles support it
-		value = arguments.length === 2 ? value : 'inherit';
+		value = hasValue ? value : 'inherit';
 		//Create a key for caching purposes
 		key = style + ':' + value;
 		//Check the cache
@@ -64,7 +67,12 @@
 			//Create a capitalized version of the style property to be combined with the vendor prefixes
 			capitalized = camel.charAt(0).toUpperCase() + camel.slice(1);		
 			//First determine support for the style
-			support = (typeof el.style[camel] === 'string');
+			support = camel in el.style;
+			//check if the style is supported and no value was supplied
+			if(support && !hasValue){
+				//support is resolved, return true
+				return true;	
+			}
 			//Add the style and value inline to the test element
 			el.style.cssText = style+':'+value;
 			//Check to see if the style and value exists
@@ -82,7 +90,12 @@
 					//Create a vendor prefixed version of the style property in camel case format
 					camel = prefixes[length] + capitalized;
 					//First determine support for the style
-					support = (typeof el.style[camel] === 'string');
+					support = camel in el.style;
+					//check if the style is supported and no value was supplied
+					if(support && !hasValue){
+						//support is resolved, return true
+						return true;	
+					}
 					//Add the vendor prefixed style and value inline
 					el.style.cssText = style+':'+value;
 					//Check to see if the style and value exists
