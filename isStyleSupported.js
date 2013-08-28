@@ -71,7 +71,7 @@
 			//check if the style is supported and no value was supplied
 			if(support && !hasValue){
 				//support is resolved, return true
-				return true;	
+				return cache[key] = true;	
 			}
 			//Add the style and value inline to the test element
 			el.style.cssText = style+':'+value;
@@ -94,7 +94,7 @@
 					//check if the style is supported and no value was supplied
 					if(support && !hasValue){
 						//support is resolved, return true
-						return true;	
+						return cache[key] = true;	
 					}
 					//Add the vendor prefixed style and value inline
 					el.style.cssText = style+':'+value;
