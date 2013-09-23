@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <script src="isStyleSupported.js"></script>
+		<script src="isStyleSupported.js"></script>
         <script>
-		var tests = [
+        var tests = [
 			{style: 'foo'},
 			{style: 'animation-name'},
 			{style: 'display', value: 'flex'},
@@ -18,13 +18,13 @@
 			{style: 'text-shadow'},
 			{style: 'transition', value: 'width 1s ease-in'},
 			{style: 'font-size', value: '1rem'},
-		];
-		
-		tests.forEach(function(test){
-			var hasValue = 'value' in test; 
-			console.log(test.style + (hasValue ? ':' + test.value : '') + ' - ' + (hasValue ? isStyleSupported(test.style, test.value) : isStyleSupported(test.style))); 
-		});
-		</script>
+        ];
+        
+        tests.forEach(function(test){
+        	var hasValue = 'value' in test; 
+        	console.log(test.style + (hasValue ? ':' + test.value : '') + ' - ' + (hasValue ? isStyleSupported(test.style, test.value) : isStyleSupported(test.style))); 
+        });
+        </script>
     </head>
     <body>
 		
