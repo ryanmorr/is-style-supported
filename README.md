@@ -6,9 +6,11 @@ Method that provides a reliable means of determining support for CSS styles and 
 
 To use the method, simply provide a style as the first argument in typical CSS notation (hyphenated). You will not be required to provide vendor prefixes, that is done internally. You can use the optional second argument to determine support for the style's value as well.
 
-	isStyleSupported('animation-name');
-	
-	isStyleSupported('display', 'flex');
+```javascript
+isStyleSupported('animation-name');
+
+isStyleSupported('display', 'flex');
+```
 	
 The method will return true/false based on the browser's support for the style declaration.		
 
