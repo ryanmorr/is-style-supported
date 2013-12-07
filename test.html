@@ -1,31 +1,63 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <script src="isStyleSupported.js"></script>
-        <script>
-            var tests = [
-                {style: 'foo'},
-                {style: 'animation-name'},
-                {style: 'display', value: 'flex'},
-                {style: 'transform', value: 'rotate(7deg)'},
-                {style: 'position', value: 'bar'},
-                {style: 'box-shadow'},
-                {style: 'background', value: 'linear-gradient(to bottom, #fff 0%, #000 100%)'},
-                {style: 'background', value: '-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #000))'},
-                {style: 'box-sizing', value: 'padding-box'},
-                {style: 'text-shadow'},
-                {style: 'transition', value: 'width 1s ease-in'},
-                {style: 'font-size', value: '1rem'},
-            ];
-            
-            tests.forEach(function(test){
-                var hasValue = 'value' in test; 
-                console.log(test.style + (hasValue ? ':' + test.value : '') + ' - ' + (hasValue ? isStyleSupported(test.style, test.value) : isStyleSupported(test.style))); 
-            });
-        </script>
-    </head>
-    <body>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Feature Testing CSS3 Support</title>
+    <style>
+    ul{padding-left:0}
+    li{margin:3px 0;padding-bottom:3px;clear:both;float:left;list-style:none;font-family:Courier,monospace;font-size:12px;border-bottom:1px solid #eee}
+    li.sub{margin-left:30px}
+    li.sub .label{width:370px}
+    span{float:left;display:block}
+    .label{width:400px}
+    .label>span{text-decoration:underline}
+    .supported{color:#093;font-weight:bold}
+    .unsupported{color:#F00;font-weight:bold}
+    </style>
+    <script src="isStyleSupported.js"></script>
+</head>
+<body>
+
+    <p>Feature tests the current browser's level of support for various CSS3 styles and their assignable values. Vendor prefixes for the style properties are omitted, as the method handles this internally. This project can be found at <a href="https://github.com/ryanmorr/is-style-supported">https://github.com/ryanmorr/is-style-supported</a>.</p>
+    <ul id="list"></ul>
+    
+    <script>        
+    var html = '',
+    styles = {
+        'animation': ['move 1s linear 0s infinite', 'rotate 100ms ease-in-out 10ms infinite alternate', 'scale 2s cubic-bezier(0, 0.3, 0.7, 1) 1s 1 alternate-reverse'],
+        'background': ['linear-gradient(to bottom, #fff 0%, #000 100%)', '-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #000))'],
+        'border-image': ['url(border.png) 30 30 round'],
+        'border-radius': ['calc(10px - 50%)'],
+        'box-shadow': ['10px 10px 5px #888888'],
+        'box-sizing': ['border-box', 'content-box', 'padding-box'],
+        'color': ['rgba(0, 0, 0, 0.5)', 'hsl(0, 100%, 50%)', 'hsla(0, 100%, 50%, 0.5)', 'antiquewhite', 'currentColor'],
+        'column-count': null,
+        'column-gap': null,
+        'display': ['inline', 'block', 'flex', 'grid', 'inline-grid', 'inline-flex', 'inline-block', 'inline-table', 'list-item', 'run-in', 'table', 'table-caption', 'table-column-group', 'table-header-group', 'table-footer-group', 'table-row-group', 'table-cell', 'table-column', 'table-row'],
+        'outline': ['ridge thick black'],
+        'resize': ['both'],
+        'text-shadow': ['5px 5px 5px #000000'],
+        'transform': ['none', 'matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)', 'matrix3d(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)', 'translate(12px, 50%)', 'translate3d(12px, 50%, 3em)', 'translateX(2em)', 'translateY(3in)', 'translateZ(2px)', 'scale(2, 0.5)', 'scale3d(2.5, 1.2, 0.3)', 'scaleX(2)', 'scaleY(0.5)', 'scaleZ(0.3)', 'rotate(0.5turn)', 'rotate3d(1, 2.0, 3.0, 10deg)', 'rotateX(10deg)', 'rotateY(10deg)', 'rotateZ(10deg)', 'skew(30deg,-10deg)', 'skewX(30deg)', 'skewY(1.07rad)', 'perspective(17px)'],
+        'transition': ['width 1s ease-in', 'height 500ms ease-out']
+    };
+    
+    for(var prop in styles){
+        if(styles.hasOwnProperty(prop)){
+            var support = isStyleSupported(prop), className = support ? 'supported' : 'unsupported';
+            html += '<li><span class="label"><span>'+prop+':</span></span><span class="'+className+'">'+String(support).toUpperCase()+'</span></li>';
+            if(support && styles[prop]){
+                for(var i=0, len = styles[prop].length, value; i < len; i++){
+                    value = styles[prop][i];
+                    support = isStyleSupported(prop, value);
+                    className = support ? 'supported' : 'unsupported';
+                    html += '<li class="sub"><span class="label">'+value+':</span><span class="'+className+'">'+String(support).toUpperCase()+'</span></li>';
+                }
+            }
+        }
+    }
+    
+    list.innerHTML = html;
+    </script>
+
+</body>
 </html>
