@@ -1,6 +1,6 @@
 /*
  * isStyleSupported
- * Detect support for CSS styles and assignable values
+ * Detect support for CSS properties and their assignable values
  * @param {String} prop
  * @param {String} value (optional)
  * @return {Boolean}
@@ -12,8 +12,6 @@
     var el = win.document.createElement('div'),
     prefixes = ['Webkit', 'Moz', 'O', 'ms'], 
     camelRe = /-([a-z]|[0-9])/ig,
-    cache = {},
-    key, 
     length, 
     support, 
     camel,
@@ -51,17 +49,17 @@
             // Add the unprefixed property and value as CSS test to the 
             // test element and determine support based on whether the
             // property exists in the style object
-            el.style.cssText = prop+':'+value;
+            el.style.cssText = prop + ':' + value;
             support = camel in el.style && el.style[camel] !== '';
             length = prefixes.length;
             while(!support && length--){
                 // We repeat the previous steps here, this time trying 
                 // each vendor prefix to determine support
                 prefixed = '-'+prefixes[length].toLowerCase()+'-'+prop;
-                support = checkNative(prefixed, value);
+                support = nativeSupports(prefixed, value);
                 if(!support){
                     camel = prefixes[length] + capitalized;
-                    el.style.cssText = prefixed+':'+value;
+                    el.style.cssText = prefixed + ':' + value;
                     support = camel in el.style && el.style[camel] !== '';
                 }
             }
