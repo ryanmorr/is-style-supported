@@ -1,6 +1,8 @@
 describe('isStyleSupported', function(){
     'use strict';
 
+    var expect = chai.expect;
+
     it('should return true for supported properties', function(){
         expect(isStyleSupported('background')).to.equal(true);
         expect(isStyleSupported('border')).to.equal(true);
