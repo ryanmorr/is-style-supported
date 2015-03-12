@@ -28,11 +28,11 @@
     // Test the different native APIs for style support
     function nativeSupports(prop, value){
         // Check the standard method first
-        if('CSS' in win && 'supports' in win.CSS){
+        if('CSS' in win && win.CSS.supports){
             return win.CSS.supports(prop, value);  
         }
         // Check for Opera's native method
-        if('supportsCSS' in win){
+        if(win.supportsCSS){
             return win.supportsCSS(prop, value);
         }
         return false;
@@ -49,8 +49,9 @@
             // Add the unprefixed property and value as CSS test to the 
             // test element and determine support based on whether the
             // property exists in the style object
+            support = camel in el.style;
             el.style.cssText = prop + ':' + value;
-            support = camel in el.style && el.style[camel] !== '';
+            support = support && el.style[camel] !== '';
             length = prefixes.length;
             while(!support && length--){
                 // We repeat the previous steps here, this time trying 
