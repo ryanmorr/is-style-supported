@@ -60,8 +60,9 @@
                 support = nativeSupports(prefixed, value);
                 if(!support){
                     camel = prefixes[length] + capitalized;
+                    support = camel in el.style;
                     el.style.cssText = prefixed + ':' + value;
-                    support = camel in el.style && el.style[camel] !== '';
+                    support = support && el.style[camel] !== '';
                 }
             }
         }
