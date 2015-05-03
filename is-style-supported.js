@@ -38,7 +38,7 @@
         return false;
     }
         
-    win.isStyleSupported = function(prop, value){
+    win.isStyleSupported = function isStyleSupported(prop, value){
         // If no value is supplied, use "inherit"
         value = arguments.length === 2 ? value : 'inherit';
         // Check native methods first
