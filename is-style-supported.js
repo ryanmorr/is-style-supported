@@ -20,13 +20,13 @@
     
     // Convert CSS notation (kebal-case) to DOM notation (camel-case)
     function toCamelCase(prop){
-        return prop.replace(camelRe, function(all, letter){
-            return (letter + '').toUpperCase();                                             
+        return prop.replace(camelRe, function(all, char){
+            return (char + '').toUpperCase();                                             
         });
     }
     
-    // Test the different native APIs for style support
-    function nativeSupports(prop, value){
+    // Test the different native APIs for CSS support
+    function checkNativeSupport(prop, value){
         // Check the standard method first
         if('CSS' in win && win.CSS.supports){
             return win.CSS.supports(prop, value);  
@@ -37,33 +37,41 @@
         }
         return false;
     }
-        
+
+    // Determine support by actually appluing the property/value 
+    // as CSS to the test element and checking if the property 
+    // exists in the style object
+    function canSetProperty(prop, camel, value){
+        var support = camel in el.style;
+        if(value === 'inherit'){
+            return support;
+        }
+        el.style.cssText = prop + ':' + value;
+        return support && el.style[camel] !== '';
+    }
+    
+    // Define `isStyleSupported` globally     
     win.isStyleSupported = function isStyleSupported(prop, value){
         // If no value is supplied, use "inherit"
         value = arguments.length === 2 ? value : 'inherit';
         // Check native methods first
-        support = nativeSupports(prop, value);
-        if(!support){
-            camel = toCamelCase(prop);
-            capitalized = camel.charAt(0).toUpperCase() + camel.slice(1);       
-            // Add the unprefixed property and value as CSS test to the 
-            // test element and determine support based on whether the
-            // property exists in the style object
-            support = camel in el.style;
-            el.style.cssText = prop + ':' + value;
-            support = support && el.style[camel] !== '';
-            length = prefixes.length;
-            while(!support && length--){
-                // We repeat the previous steps here, this time trying 
-                // each vendor prefix to determine support
-                prefixed = '-'+prefixes[length].toLowerCase()+'-'+prop;
-                support = nativeSupports(prefixed, value);
-                if(!support){
-                    camel = prefixes[length] + capitalized;
-                    support = camel in el.style;
-                    el.style.cssText = prefixed + ':' + value;
-                    support = support && el.style[camel] !== '';
-                }
+        support = checkNativeSupport(prop, value);
+        if(support){
+            return true;
+        }
+        camel = toCamelCase(prop);
+        capitalized = camel.charAt(0).toUpperCase() + camel.slice(1);       
+        // Check if the property/value can be applied to an element
+        support = canSetProperty(prop, camel, value);
+        length = prefixes.length;
+        while(!support && length--){
+            // We repeat the previous steps here, this time trying 
+            // each vendor prefix to determine support
+            prefixed = '-'+prefixes[length].toLowerCase()+'-'+prop;
+            support = checkNativeSupport(prefixed, value);
+            if(!support){
+                camel = prefixes[length] + capitalized;
+                support = canSetProperty(prefixed, camel, value);
             }
         }
         return support;    
