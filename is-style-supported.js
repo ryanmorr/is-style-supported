@@ -10,18 +10,18 @@
     'use strict';
 
     var el = win.document.createElement('div'),
-        prefixes = ['Webkit', 'Moz', 'O', 'ms'],
-        camelRe = /-([a-z]|[0-9])/ig,
-        length,
-        support,
-        camel,
-        capitalized,
-        prefixed;
-
-    // Convert CSS notation (kebal-case) to DOM notation (camel-case)
-    function toCamelCase(prop) {
-        return prop.replace(camelRe, function (all, char) {
-            return (char + '').toUpperCase();
+    prefixes = ['Webkit', 'Moz', 'O', 'ms'], 
+    camelRe = /-([a-z]|[0-9])/ig,
+    length, 
+    support, 
+    camel,
+    capitalized,
+    prefixed;
+    
+    // Convert CSS notation (kebab-case) to DOM notation (camelCase)
+    function toCamelCase(prop){
+        return prop.replace(camelRe, function(all, char){
+            return (char + '').toUpperCase();                                             
         });
     }
 
