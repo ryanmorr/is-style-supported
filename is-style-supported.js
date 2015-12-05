@@ -18,7 +18,7 @@
     capitalized,
     prefixed;
     
-    // Convert CSS notation (kebal-case) to DOM notation (camel-case)
+    // Convert CSS notation (kebab-case) to DOM notation (camelCase)
     function toCamelCase(prop){
         return prop.replace(camelRe, function(all, char){
             return (char + '').toUpperCase();                                             
