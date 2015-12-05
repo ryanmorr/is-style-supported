@@ -40,8 +40,8 @@
         return false;
     }
 
-    // Determine support by actually appluing the property/value
-    // as CSS to the test element and checking if the property
+    // Determine support by actually applying the property/value 
+    // as CSS to the test element and checking if the property 
     // exists in the style object
     function canSetProperty(prop, camel, value) {
         var support = camel in el.style;
