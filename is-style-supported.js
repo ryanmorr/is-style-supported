@@ -84,4 +84,4 @@
         return support;
     };
 
-})(this);
+})(window);
