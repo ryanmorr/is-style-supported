@@ -10,38 +10,37 @@
     'use strict';
 
     var el = win.document.createElement('div'),
-    prefixes = ['Webkit', 'Moz', 'O', 'ms'], 
+    prefixes = ['Webkit', 'Moz', 'O', 'ms'],
     camelRe = /-([a-z]|[0-9])/ig,
-    length, 
-    support, 
+    length,
+    support,
     camel,
     capitalized,
     prefixed;
-    
+
     // Convert CSS notation (kebab-case) to DOM notation (camelCase)
-    function toCamelCase(prop){
-        return prop.replace(camelRe, function(all, char){
-            return (char + '').toUpperCase();                                             
+    function toCamelCase(prop) {
+        return prop.replace(camelRe, function (all, char) {
+            return (char + '').toUpperCase();
         });
     }
 
     // Test the different native APIs for CSS support
-    function checkNativeSupport(prop, value) {
+    var checkNativeSupport;
+    if ('CSS' in win && win.CSS.supports) {
         // Check the standard method first
-        if ('CSS' in win && win.CSS.supports) {
-            return win.CSS.supports(prop, value);
-        }
-
+        checkNativeSupport = win.CSS.supports;
+    } else if (win.supportsCSS) {
         // Check for Opera's native method
-        if (win.supportsCSS) {
-            return win.supportsCSS(prop, value);
-        }
-
-        return false;
+        checkNativeSupport = win.supportsCSS;
+    } else {
+        checkNativeSupport = function noop() {
+            return false;
+        };
     }
 
-    // Determine support by actually applying the property/value 
-    // as CSS to the test element and checking if the property 
+    // Determine support by actually applying the property/value
+    // as CSS to the test element and checking if the property
     // exists in the style object
     function canSetProperty(prop, camel, value) {
         var support = camel in el.style;
