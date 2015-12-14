@@ -6,7 +6,7 @@
  * @return {Boolean}
  */
 
-(function (win) {
+(function isStyleSupported(win) {
     'use strict';
 
     var el = win.document.createElement('div'),
@@ -35,7 +35,7 @@
 
     // Convert CSS notation (kebab-case) to DOM notation (camelCase)
     function toCamelCase(prop) {
-        return prop.replace(camelRe, function (all, char) {
+        return prop.replace(camelRe, function replaceChar(all, char) {
             return (char + '').toUpperCase();
         });
     }
