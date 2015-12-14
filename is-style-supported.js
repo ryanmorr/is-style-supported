@@ -6,7 +6,7 @@
  * @return {Boolean}
  */
 
-(function isStyleSupported(win) {
+(function (win) {
     'use strict';
 
     var el = win.document.createElement('div'),
@@ -28,7 +28,7 @@
         checkNativeSupport = win.supportsCSS;
     } else {
         // Native API doesn't exist
-        checkNativeSupport = function noop() {
+        checkNativeSupport = function checkNative() {
             return false;
         };
     }
