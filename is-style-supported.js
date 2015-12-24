@@ -6,10 +6,10 @@
  * @return {Boolean}
  */
 
-(function (win) {
+(function (window, document) {
     'use strict';
 
-    var el = win.document.createElement('div'),
+    var el = document.createElement('div'),
     prefixes = ['Webkit', 'Moz', 'O', 'ms'],
     camelRe = /-([a-z]|[0-9])/ig,
     length,
@@ -20,12 +20,12 @@
     checkNativeSupport;
 
     // Test the different native APIs for CSS support
-    if ('CSS' in win && win.CSS.supports) {
+    if ('CSS' in window && window.CSS.supports) {
         // Check the standard method first
-        checkNativeSupport = win.CSS.supports;
-    } else if (win.supportsCSS) {
+        checkNativeSupport = window.CSS.supports;
+    } else if (window.supportsCSS) {
         // Check for Opera's native method
-        checkNativeSupport = win.supportsCSS;
+        checkNativeSupport = window.supportsCSS;
     } else {
         // Native API doesn't exist
         checkNativeSupport = function checkNative() {
@@ -54,7 +54,7 @@
     }
 
     // Define `isStyleSupported` globally
-    win.isStyleSupported = function isStyleSupported(prop, value) {
+    window.isStyleSupported = function isStyleSupported(prop, value) {
         // If no value is supplied, use "inherit"
         value = arguments.length === 2 ? value : 'inherit';
 
@@ -84,4 +84,4 @@
         return support;
     };
 
-})(window);
+})(window, window.document);
