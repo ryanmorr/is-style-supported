@@ -1,6 +1,6 @@
 # isStyleSupported
 
-Method that provides a reliable means of detecting support for CSS styles and their assignable values in JavaScript utilizing native implementations when available. Please refer to the [blog post](http://www.ryanmorr.com/detecting-css-style-support) to read more, or view a [working example](http://codepen.io/ryanmorr/full/emvKbb/).
+Method that provides a reliable means of detecting support for CSS styles and their assignable values in JavaScript utilizing native implementations when available. Please refer to the [blog post](http://www.ryanmorr.com/detecting-css-style-support) to read more, or view a [working example](http://ryanmorr.github.io/demos/is-style-supported/).
 
 ## Usage
 
