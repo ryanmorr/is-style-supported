@@ -16,28 +16,28 @@
     support,
     camel,
     capitalized,
-    prefixed,
-    checkNativeSupport;
-
-    // Test the different native APIs for CSS support
-    if ('CSS' in win && win.CSS.supports) {
-        // Check the standard method first
-        checkNativeSupport = win.CSS.supports;
-    } else if (win.supportsCSS) {
-        // Check for Opera's native method
-        checkNativeSupport = win.supportsCSS;
-    } else {
-        // Native API doesn't exist
-        checkNativeSupport = function checkNative() {
-            return false;
-        };
-    }
+    prefixed;
 
     // Convert CSS notation (kebab-case) to DOM notation (camelCase)
     function toCamelCase(prop) {
         return prop.replace(camelRe, function replaceChar(all, char) {
             return (char + '').toUpperCase();
         });
+    }
+
+    // Test the different native APIs for CSS support
+    function checkNativeSupport(prop, value) {
+        // Check the standard method first
+        if ('CSS' in win && win.CSS.supports) {
+            return win.CSS.supports(prop, value);
+        }
+
+        // Check for Opera's native method
+        if (win.supportsCSS) {
+            return win.supportsCSS(prop, value);
+        }
+
+        return false;
     }
 
     // Determine support by actually applying the property/value
